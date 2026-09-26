@@ -482,7 +482,7 @@ async function analyzeWithGemini(file, documentType) {
     formData.append("document", file);
     formData.append("documentType", documentType);
     formData.append("language", activeLanguage);
-    const response = await fetchWithTimeout(`${apiBaseUrl}/api/analyze-document`, { method: "POST", body: formData }, 3000);
+    const response = await fetchWithTimeout(`${apiBaseUrl}/api/analyze-document`, { method: "POST", body: formData });
     if (!response.ok) throw new Error(`Analysis request failed (${response.status})`);
     latestAnalysis = await response.json();
     if (documentType === "prescription") {

@@ -269,6 +269,9 @@ app.use((error, _request, response, _next) => {
   if (error.message && (error.message.includes("Only PDF") || error.message.includes("origin"))) {
     return response.status(400).json({ error: error.message });
   }
+  if (error.status === 503 || error.status === 429) {
+    return response.status(503).json({ error: "Gemini is experiencing high demand. Please try again shortly." });
+  }
   const status = Number.isInteger(error.status) ? error.status : 502;
   console.error(error);
   return response.status(status).json({ error: status === 503 ? error.message : "Gemini request failed." });
